@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTMx To-Do List</title>
-    <script src="https://unpkg.com/htmx.org"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
-    <link rel="manifest" href="/static/manifest.json">
-</head>
-<body class="bg-gray-100 p-5">
-    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-5">
-        <h1 class="text-2xl font-bold text-center mb-4">To-Do List</h1>
-        
-        <form hx-post="/add/" hx-target="#task-list" hx-swap="beforeend" class="mb-4 flex">
-            <input type="text" name="title" class="border p-2 w-full" placeholder="새로운 할 일 추가..." required>
-            <button type="submit" class="bg-blue-500 text-white p-2 ml-2">추가</button>
-        </form>
-
+{% include 'shared/header.html' %}
+<body class="bg-gray-100">
+    <div class="bg-white shadow-md rounded-lg pt-2">
+        <h1 class="text-2xl font-bold text-center mb-4">ChatBot PoC</h1>
         <ul id="task-list">
             {% for task in tasks %}
-                {% include "tasks/task_item.html" %}
+                {% include "shared/task_item.html" %}
             {% endfor %}
         </ul>
+        <form hx-post="/add/" 
+            hx-target="#task-list" 
+            hx-swap="beforeend"
+            hx-on::after-request="this.reset()" 
+            class="mb-4 flex">
+            <input type="text" name="title" class="border p-2 w-full" placeholder="메세지를 입력하세요..." required>
+            <button type="submit" class="bg-blue-500 text-white p-2 ml-2">전송</button>
+        </form>
     </div>
 
     <script>

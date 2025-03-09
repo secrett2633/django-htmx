@@ -1,0 +1,11 @@
+<div id="name-display" class="flex items-center gap-2">
+  <span class="text-gray-900 dark:text-white">{{ user.name }}</span>
+  <button
+    hx-get="{% url 'edit_name' %}"
+    hx-target="#name-display"
+    hx-swap="outerHTML"
+    class="text-sm text-green-500 hover:text-green-600"
+  >
+    변경
+  </button>
+</div>

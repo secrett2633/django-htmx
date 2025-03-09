@@ -1,0 +1,17 @@
+<div id="bio-section">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">자기소개</h2>
+    <button
+      hx-get="{% url 'edit_bio' %}"
+      hx-target="#bio-section"
+      hx-swap="outerHTML"
+      class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors"
+    >
+      수정
+    </button>
+  </div>
+  
+  <p class="text-gray-700 dark:text-gray-300">
+    {% if user.bio %}{{ user.bio }}{% else %}자기소개가 없습니다.{% endif %}
+  </p>
+</div>

@@ -1,0 +1,60 @@
+
+{% load static %}
+
+{% include 'shared/header.html' %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+        코코아 로그인
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        소셜 계정으로 간편하게 로그인하세요.
+        <br />
+        회원가입시 코코아의
+        <a href="{% url 'pp' %}" class="text-blue-500">
+          이용약관
+        </a>
+        및
+        <a href="{% url 'tos' %}" class="text-blue-500">
+          개인정보처리방침
+        </a>
+        에 동의하게 됩니다.
+      </p>
+    </div>
+    <div class="mt-8 space-y-4">
+      <button
+        hx-post="{% url 'google_login' %}"
+        hx-swap="none"
+        class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 
+               dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 
+               hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+      >
+        <img
+          src="{% static 'icons/google.svg' %}"
+          alt="Google"
+          width="20"
+          height="20"
+        />
+        <span class="text-gray-700 dark:text-gray-200 font-bold">
+          Google로 계속하기
+        </span>
+      </button>
+
+      {% comment %}
+      <button
+        hx-post="{% url 'naver_login' %}"
+        hx-swap="none"
+        class="w-full flex items-center justify-center gap-3 px-4 py-3 
+               bg-[#03C75A] hover:bg-[#02b351] rounded-lg shadow-sm transition-colors"
+      >
+        <img src="{% static 'icons/naver.svg' %}" alt="Naver" width="20" height="20" />
+        <span class="text-white font-bold">네이버로 계속하기</span>
+      </button>
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+{% endblock %}

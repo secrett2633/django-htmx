@@ -1,0 +1,25 @@
+<div id="bio-section">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">자기소개</h2>
+  </div>
+  <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+    최대 100자까지 입력할 수 있습니다.
+  </p>
+  <form hx-post="{% url 'edit_bio' %}" hx-target="#bio-section" hx-swap="outerHTML">
+    <textarea name="bio" rows="4" 
+              class="w-full border rounded-lg p-2 mb-3 dark:bg-gray-800 dark:border-gray-700 dark:text-white">{{ user.bio|default:'' }}</textarea>
+    <div class="flex justify-end gap-2">
+      <button type="button" 
+              hx-get="{% url 'bio_section' %}" 
+              hx-target="#bio-section" 
+              hx-swap="outerHTML"
+              class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors">
+        취소
+      </button>
+      <button type="submit" 
+              class="px-3 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+        저장
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,13 @@
+<div id="phone-display" class="flex items-center gap-2">
+  <span class="text-gray-900 dark:text-white">
+    {% if user.phone_number %}{{ user.phone_number }}{% else %}미등록{% endif %}
+  </span>
+  <button
+    hx-get="{% url 'edit_phone' %}"
+    hx-target="#phone-display"
+    hx-swap="outerHTML"
+    class="text-sm text-green-500 hover:text-green-600"
+  >
+    {% if user.phone_number %}변경{% else %}등록{% endif %}
+  </button>
+</div>
