@@ -1,0 +1,21 @@
+<li id="task-{{ task.id }}" class="flex justify-between items-center p-2 border-b">
+    <span class="{% if task.completed %}line-through text-gray-500{% endif %}">
+        {{ task.title }}
+    </span>
+    <div>
+        <button 
+            hx-post="/toggle/{{ task.id }}/" 
+            hx-target="#task-{{ task.id }}" 
+            hx-swap="outerHTML"
+            class="bg-green-500 text-white px-2 py-1 mx-1">
+            ✓
+        </button>
+        <button 
+            hx-post="/delete/{{ task.id }}/" 
+            hx-target="#task-{{ task.id }}" 
+            hx-swap="outerHTML"
+            class="bg-red-500 text-white px-2 py-1">
+            ✕
+        </button>
+    </div>
+</li>
