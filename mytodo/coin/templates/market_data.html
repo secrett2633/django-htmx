@@ -1,0 +1,247 @@
+{% if markets|length == 0 and search_term %}
+    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+        검색 결과가 없습니다
+    </div>
+{% else %}
+    <div class="bg-white dark:bg-gray-950 sm:rounded-lg overflow-hidden border border-gray-200 dark:border-gray-900">
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200 dark:divide-gray-900">
+                <thead>
+                    <tr class="text-gray-500 dark:text-gray-400 text-[10px] sm:text-sm xl:text-base">
+                        <!-- 코인명 헤더 -->
+                        <th class="w-[30%] px-3 py-1 sm:py-3 text-center">
+                            <button hx-get="{% url 'load_market_data' %}"
+                                    hx-target="#market-data-container"
+                                    hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
+                                    hx-vals='{"sort_field": "name", "current_direction": "{{ sort_state.direction|default:"" }}"}'
+                                    class="flex items-center gap-1 whitespace-nowrap w-full justify-start">
+                                <div class="flex flex-col items-start gap-1">
+                                    <div>코인명</div>
+                                </div>
+                                <div class="hidden sm:block">
+                                    {% if sort_state.field == "name" %}
+                                        {% if sort_state.direction == "asc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 5L12 19M12 5L18 11M12 5L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% elif sort_state.direction == "desc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 19L12 5M12 19L18 13M12 19L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </th>
+                        
+                        <!-- 프리미엄 헤더 -->
+                        <th class="w-[15%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
+                            <button hx-get="{% url 'load_market_data' %}"
+                                    hx-target="#market-data-container"
+                                    hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
+                                    hx-vals='{"sort_field": "premium", "current_direction": "{{ sort_state.direction|default:"" }}"}'
+                                    class="flex items-center gap-1 whitespace-nowrap w-full justify-end">
+                                <div class="flex flex-col items-end gap-1">
+                                    <div>프리미엄</div>
+                                </div>
+                                <div class="hidden sm:block">
+                                    {% if sort_state.field == "premium" %}
+                                        {% if sort_state.direction == "asc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 5L12 19M12 5L18 11M12 5L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% elif sort_state.direction == "desc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 19L12 5M12 19L18 13M12 19L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </th>
+                        
+                        <!-- 시작 거래소 가격 헤더 -->
+                        <th class="w-[20%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
+                            <button hx-get="{% url 'load_market_data' %}"
+                                    hx-target="#market-data-container"
+                                    hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
+                                    hx-vals='{"sort_field": "fromPrice", "current_direction": "{{ sort_state.direction|default:"" }}"}'
+                                    class="flex items-center gap-1 whitespace-nowrap w-full justify-end">
+                                <div class="flex flex-col items-end gap-0.5 sm:gap-1">
+                                    <div>{{ from_exchange_label }} 가격</div>
+                                    <span class="text-[8px] sm:text-xs text-gray-500 dark:text-gray-400 block">
+                                        전일대비(%)
+                                    </span>
+                                </div>
+                                <div class="hidden sm:block">
+                                    {% if sort_state.field == "fromPrice" %}
+                                        {% if sort_state.direction == "asc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 5L12 19M12 5L18 11M12 5L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% elif sort_state.direction == "desc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 19L12 5M12 19L18 13M12 19L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </th>
+                        
+                        <!-- 비교 거래소 가격 헤더 -->
+                        <th class="w-[20%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
+                            <button hx-get="{% url 'load_market_data' %}"
+                                    hx-target="#market-data-container"
+                                    hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
+                                    hx-vals='{"sort_field": "toPrice", "current_direction": "{{ sort_state.direction|default:"" }}"}'
+                                    class="flex items-center gap-1 whitespace-nowrap w-full justify-end">
+                                <div class="flex flex-col items-end gap-0.5 sm:gap-1">
+                                    <div>{{ to_exchange_label }} 가격</div>
+                                    <span class="text-[8px] sm:text-xs text-gray-500 dark:text-gray-400 block">
+                                        전일대비(%)
+                                    </span>
+                                </div>
+                                <div class="hidden sm:block">
+                                    {% if sort_state.field == "toPrice" %}
+                                        {% if sort_state.direction == "asc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 5L12 19M12 5L18 11M12 5L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% elif sort_state.direction == "desc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 19L12 5M12 19L18 13M12 19L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </th>
+                        
+                        <!-- 거래량 헤더 -->
+                        <th class="w-[15%] pr-1 py-1.5 sm:py-3 text-center">
+                            <button hx-get="{% url 'load_market_data' %}"
+                                    hx-target="#market-data-container"
+                                    hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
+                                    hx-vals='{"sort_field": "volume", "current_direction": "{{ sort_state.direction|default:"" }}"}'
+                                    class="flex items-center gap-1 whitespace-nowrap w-full justify-end">
+                                <div class="flex flex-col items-end gap-0.5 sm:gap-1">
+                                    <div>거래량</div>
+                                    <span class="text-[8px] sm:text-xs text-gray-500 dark:text-gray-400 block">
+                                        (시작거래소)
+                                    </span>
+                                </div>
+                                <div class="hidden sm:block">
+                                    {% if sort_state.field == "volume" %}
+                                        {% if sort_state.direction == "asc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 5L12 19M12 5L18 11M12 5L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% elif sort_state.direction == "desc" %}
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 19L12 5M12 19L18 13M12 19L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-900">
+                    {% for market in markets %}
+                        <tr class="text-xs sm:text-sm xl:text-base hover:bg-gray-50 dark:hover:bg-gray-900">
+                            <!-- 이름 -->
+                            <td class="px-1 sm:px-3 py-1.5 sm:py-3 xl:py-4">
+                                {{ market.korean_name }}
+                            </td>
+                            <!-- 프리미엄 -->
+                            <td class="px-1 sm:px-3 py-1.5 sm:py-3 xl:py-4 text-right whitespace-nowrap">
+                                <span class="font-medium flex items-center justify-end gap-0.5 text-xs sm:text-base xl:text-lg
+                                            {% if market.price_gap_percent == 0 %}
+                                                text-gray-400 dark:text-gray-500
+                                            {% elif market.price_gap_percent > 0 %}
+                                                text-green-600 dark:text-green-500
+                                            {% else %}
+                                                text-red-500 dark:text-red-400
+                                            {% endif %}">
+                                    
+                                    {% if market.price_gap_percent > 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-b-[4px] sm:border-x-[4px] border-x-transparent sm:border-b-[6px] border-b-current"></div>
+                                    {% elif market.price_gap_percent < 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-t-[4px] sm:border-x-[4px] border-x-transparent sm:border-t-[6px] border-t-current"></div>
+                                    {% endif %}
+                                    
+                                    {{ market.price_gap_percent }}%
+                                </span>
+                            </td>
+                            
+                            <!-- 시작 거래소 가격 -->
+                            <td class="px-1 sm:px-3 py-1.5 sm:py-3 xl:py-4 text-right font-medium whitespace-nowrap text-gray-900 dark:text-white">
+                                {% if from_base == "KRW" or from_base == "USDT" %}
+                                    <span class="hidden sm:inline">₩</span>
+                                {% endif %}
+                                
+                                <span class="font-medium text-xs md:text-[14px] sm:text-base xl:text-lg">
+                                    {{ market.from_price_formatted }}
+                                </span>
+                                
+                                <div class="text-[11px] sm:text-sm xl:text-base flex items-center justify-end gap-0.5 font-medium mt-0.5 sm:mt-1
+                                            {% if market.from_price_change24h > 0 %}
+                                                text-green-600 dark:text-green-500
+                                            {% elif market.from_price_change24h < 0 %}
+                                                text-red-500 dark:text-red-400
+                                            {% else %}
+                                                text-gray-500 dark:text-gray-400
+                                            {% endif %}">
+                                    
+                                    {% if market.from_price_change24h > 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-b-[4px] sm:border-x-[4px] border-x-transparent sm:border-b-[6px] border-b-current"></div>
+                                    {% elif market.from_price_change24h < 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-t-[4px] sm:border-x-[4px] border-x-transparent sm:border-t-[6px] border-t-current"></div>
+                                    {% endif %}
+                                    
+                                    {{ market.from_price_change24h }}%
+                                </div>
+                            </td>
+                            
+                            <!-- 비교 거래소 가격 -->
+                            <td class="px-0 sm:px-3 py-1.5 sm:py-3 xl:py-4 text-right font-medium whitespace-nowrap text-gray-900 dark:text-white">
+                                {% if to_base == "KRW" or to_base == "USDT" %}
+                                    <span class="hidden sm:inline">₩</span>
+                                {% endif %}
+                                
+                                <span class="font-medium text-[13px] md:text-[14px] sm:text-base xl:text-lg">
+                                    {{ market.to_price_formatted }}
+                                </span>
+                                
+                                <div class="text-[11px] sm:text-sm xl:text-base flex items-center justify-end gap-0.5 font-medium mt-0.5 sm:mt-1
+                                            {% if market.to_price_change24h > 0 %}
+                                                text-green-600 dark:text-green-500
+                                            {% elif market.to_price_change24h < 0 %}
+                                                text-red-500 dark:text-red-400
+                                            {% else %}
+                                                text-gray-500 dark:text-gray-400
+                                            {% endif %}">
+                                    
+                                    {% if market.to_price_change24h > 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-b-[4px] sm:border-x-[4px] border-x-transparent sm:border-b-[6px] border-b-current"></div>
+                                    {% elif market.to_price_change24h < 0 %}
+                                        <div class="w-0 h-0 border-x-[2px] border-t-[4px] sm:border-x-[4px] border-x-transparent sm:border-t-[6px] border-t-current"></div>
+                                    {% endif %}
+                                    
+                                    {{ market.to_price_change24h }}%
+                                </div>
+                            </td>
+                            
+                            <!-- 거래량 -->
+                            <td class="pr-1 sm:px-3 py-1.5 sm:py-3 xl:py-4 text-right text-gray-500 dark:text-gray-400 font-medium text-[11px] sm:text-base xl:text-lg">
+                                {{ market.volume_formatted }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}

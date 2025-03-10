@@ -21,6 +21,7 @@ from dashboard.views import *
 from chatbot.views import *
 from user.views import *
 from shared.views import *
+from coin.views import *
 
 urlpatterns = [
     # Django 관리자 페이지
@@ -69,5 +70,12 @@ urlpatterns += [
 
 urlpatterns += [
     # Chatbot 관련 URL
-    path('chatbot', chatbot, name='chatbot')
+    path('chatbot', chatbot, name='chatbot'),
+    path('chatbot/send/', chat_send, name='chat_send'),
+]
+
+urlpatterns += [
+    # Coin 관련 URL
+    path('coin/', coin_page, name='coin'),
+    path('load_market_data/', load_market_data, name='load_market_data'),
 ]

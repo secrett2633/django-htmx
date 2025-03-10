@@ -1,5 +1,5 @@
 <div id="name-display" class="flex items-center gap-2">
-  <span class="text-gray-900 dark:text-white">{{ user.name }}</span>
+  <span class="text-gray-900 dark:text-white">{{ user.username }}</span>
   <button
     hx-get="{% url 'edit_name' %}"
     hx-target="#name-display"

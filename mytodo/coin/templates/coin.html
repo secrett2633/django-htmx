@@ -1,0 +1,39 @@
+{% include "shared/header.html" %}
+{% load static %}
+
+<div class="space-y-2 sm:space-y-4 lg:space-y-6" 
+     hx-trigger="load"
+     hx-get="{% url 'load_market_data' %}"
+     hx-target="#market-data-container"
+     hx-indicator="#loading-indicator">
+    
+    <div class="bg-white dark:bg-gray-950 sm:rounded-lg p-3 sm:p-4 lg:p-6 border border-gray-200 dark:border-gray-900">
+        <div class="flex flex-col sm:flex-row gap-1 sm:gap-2 lg:gap-4 sm:justify-between sm:items-end">            
+            <!-- 검색 입력창 -->
+            <div class="relative mt-1 sm:mt-0">
+                <div class="relative">
+                    <input
+                        type="text"
+                        id="search-term"
+                        name="search-term"
+                        placeholder="코인명 검색 (한글/영문)"
+                        value="{{ search_term }}"
+                        hx-get="{% url 'load_market_data' %}"
+                        hx-target="#market-data-container"
+                        hx-trigger="keyup changed delay:500ms"
+                        hx-include="[name='from-exchange'], [name='to-exchange']"
+                        class="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 마켓 데이터 컨테이너 -->
+    <div id="market-data-container">
+        {% include "market_data.html" %}
+    </div>
+</div>

@@ -13,7 +13,7 @@ from shared.views import get_navigation
 @csrf_exempt
 def google_login(request):
     """Google OAuth 로그인 URL 반환"""
-    client_id = "126046955927-ushqrk9d2i8t1ad6esvika738eu0vk1l.apps.googleusercontent.com"
+    client_id = settings.GOOGLE_CLIENT_ID
     redirect_uri = f"{settings.API_URL}/auth/google/callback"
     scope = "email profile"
     
@@ -42,9 +42,11 @@ def google_callback(request):
         'grant_type': 'authorization_code'
     }
     
+    print(data)
     response = requests.post(token_url, data=data)
     token_data = response.json()
     
+    print(response)
     access_token = token_data.get('access_token')
     
     # 2. 액세스 토큰으로 사용자 정보 가져오기
@@ -53,10 +55,10 @@ def google_callback(request):
     
     user_info_response = requests.get(user_info_url, headers=headers)
     user_info = user_info_response.json()
-    
+    print(user_info)
     # 3. 사용자 정보로 Django 사용자 생성 또는 조회
     email = user_info.get('email')
-    print(user_info)
+
     # 이메일로 사용자 조회, 없으면 새로 생성
     try:
         user = User.objects.get(email=email)

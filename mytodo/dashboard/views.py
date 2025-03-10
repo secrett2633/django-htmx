@@ -86,5 +86,6 @@ def bio_section(request):
     context = {'user': request.user}
     return render(request, 'bio_section.html', context)
 
+@login_required
 def dashboard_page(request):
     return render(request, 'dashboard.html')
