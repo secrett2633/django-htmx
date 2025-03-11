@@ -71,7 +71,7 @@ urlpatterns += [
 urlpatterns += [
     # Chatbot 관련 URL
     path('chatbot', chatbot, name='chatbot'),
-    path('chatbot/send/', chat_send, name='chat_send'),
+    path('chat/send/', chat_send, name='chat_send'),
 ]
 
 urlpatterns += [

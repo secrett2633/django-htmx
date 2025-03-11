@@ -45,38 +45,13 @@ class ChatConsumer(AsyncHttpConsumer):
             (b"Transfer-Encoding", b"chunked"),
             (b"Access-Control-Allow-Origin", b"*"),  # CORS 문제 해결
             (b"Connection", b"keep-alive"),  # 연결 유지
-        ])
-
-        # GET 파라미터 받기
-        if self.scope['method'] == 'GET':
-
-            body_str = self.scope['query_string'].decode('utf-8')
-
-        # POST 요청 본문 디코딩
-        if self.scope['method'] == 'POST':
-            # POST 요청 본문 디코딩
-
-            body_str = body.decode('utf-8')
-        print(body_str)
+        ])        
         
-        # POST 요청 데이터 파싱 (application/x-www-form-urlencoded 형식 처리)
-        # 'message=안녕하세요' 같은 형식이면 아래와 같이 파싱
-        data = {}
-        if body_str:
-            params = body_str.split('&')
-            for param in params:
-                if '=' in param:
-                    key, value = param.split('=', 1)
-                    # URL 인코딩된 파라미터 디코딩
-                    from urllib.parse import unquote_plus
-                    data[key] = unquote_plus(value)
-        
-        user_message = data.get('message', '')
-        print(user_message)
-        
-        for i, data in enumerate(user_message):
+        user_message = self.scope['url_route']['kwargs']['message']
+        for i, data in enumerate("SSE 응답 테스트입니다. '" + user_message + "' 메세지에 대한 LLM 응답은 추후에 추가될 예정입니다."):
+            if data == " ":
+                data = "&nbsp;"
             await self.send_body(f"id: {i}\nevent: message\ndata: {data}\n\n".encode("utf-8"), more_body=True)
-            await asyncio.sleep(1)
-            
-        await self.send_body(b"", more_body=False)
+            await asyncio.sleep(0.05)        
         
+        await self.send_body(f'event: message\ndata: <div id="chat-sse-listener" hx-swap-oob="true"></div>\n\n'.encode("utf-8"), more_body=False)

@@ -1,25 +1,28 @@
 <div data-variant="{{ variant }}" class="p-4 px-16
-    data-[variant=ai]:bg-slate-100
-    data-[variant=ai-sse]:bg-slate-100
-    data-[variant=human]:bg-slate-200
-">
+    data-[variant=ai]:bg-slate-100 
+    data-[variant=ai-sse]:bg-slate-100 
+    data-[variant=human]:bg-slate-200 
+    ">
+
     <div class="max-w-[600px] m-auto prose">
-        <div id="message-container">
-            <!-- SSE 응답이 여기에 추가됨 -->
+        {% if variant == "ai-sse" %}
+        <div
+            id="chat-sse-listener"
+            hx-ext="sse"
+            sse-connect="ssechat/{{ human_message }}/"
+            >
+
+            <div
+                sse-swap="message"
+                hx-target="#sage-answer-{{ chat_id }}"
+                hx-swap="beforeend"
+            ></div>
+
         </div>
-        <!-- SSE 소스를 설정하는 별도의 div -->
-        <div hx-ext="sse" hx-trigger="load" sse-connect="/chat/?message={{ text }}" sse-swap="message">
-            <div id="sse-message" hx-swap-oob="beforeend:#message-container"></div>
-        </div>
+        <div id="sage-answer-{{ chat_id }}"></div>
+        
+        {% else %}
+        {{ text|safe }}
+        {% endif %}
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 처음 로드되었을 때만 SSE 요청을 보내도록 설정
-        const sseContainer = document.getElementById('sse-container');
-        if (sseContainer) {
-            sseContainer.style.display = 'block'; // SSE 요청을 보낼 준비
-        }
-    });
-</script>
