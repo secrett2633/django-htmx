@@ -54,4 +54,5 @@ class ChatConsumer(AsyncHttpConsumer):
             await self.send_body(f"id: {i}\nevent: message\ndata: {data}\n\n".encode("utf-8"), more_body=True)
             await asyncio.sleep(0.05)        
         
-        await self.send_body(f'event: message\ndata: <div id="chat-sse-listener" hx-swap-oob="true"></div>\n\n'.encode("utf-8"), more_body=False)
+        chat_id = self.scope['url_route']['kwargs']['chat_id']
+        await self.send_body(f'event: message\ndata: <div id="chat-sse-listener-{chat_id}" hx-swap-oob="true"></div>\n\n'.encode("utf-8"), more_body=False)

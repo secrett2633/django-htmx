@@ -23,7 +23,7 @@ django_asgi_app = get_asgi_application()
 application = ProtocolTypeRouter({
     "http": URLRouter([
         path('sse/', SSEConsumer.as_asgi()),
-        path("ssechat/<str:message>/", ChatConsumer.as_asgi()),
+        path("ssechat/<str:message>/<str:chat_id>/", ChatConsumer.as_asgi()),
         re_path(r"", django_asgi_app)
     ]),
 

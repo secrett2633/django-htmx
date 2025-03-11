@@ -7,9 +7,9 @@
     <div class="max-w-[600px] m-auto prose">
         {% if variant == "ai-sse" %}
         <div
-            id="chat-sse-listener"
+            id="chat-sse-listener-{{ chat_id }}"
             hx-ext="sse"
-            sse-connect="ssechat/{{ human_message }}/"
+            sse-connect="ssechat/{{ human_message }}/{{ chat_id }}/"
             >
 
             <div
