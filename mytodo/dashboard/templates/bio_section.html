@@ -4,6 +4,7 @@
     <button
       hx-get="{% url 'edit_bio' %}"
       hx-target="#bio-section"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       hx-swap="outerHTML"
       class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors"
     >

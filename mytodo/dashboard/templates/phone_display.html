@@ -6,6 +6,7 @@
     hx-get="{% url 'edit_phone' %}"
     hx-target="#phone-display"
     hx-swap="outerHTML"
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     class="text-sm text-green-500 hover:text-green-600"
   >
     {% if user.phone_number %}변경{% else %}등록{% endif %}

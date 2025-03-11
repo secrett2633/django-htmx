@@ -1,9 +1,7 @@
-from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 
-@csrf_exempt
 @login_required
 def edit_name(request):
     """View for editing user name via HTMX"""
@@ -25,7 +23,6 @@ def edit_name(request):
         context = {'user': user}
         return render(request, 'name_display.html', context)
 
-@csrf_exempt
 @login_required
 def edit_phone(request):
     """View for editing phone number via HTMX"""
@@ -47,7 +44,6 @@ def edit_phone(request):
         context = {'user': user}
         return render(request, 'phone_display.html', context)
 
-@csrf_exempt
 @login_required
 def edit_bio(request):
     """View for editing user bio via HTMX"""

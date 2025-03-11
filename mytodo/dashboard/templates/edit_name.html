@@ -1,5 +1,5 @@
 <div id="name-display">
-  <form hx-post="{% url 'edit_name' %}" hx-target="#name-display" hx-swap="outerHTML" class="flex items-center gap-2">
+  <form hx-post="{% url 'edit_name' %}" hx-target="#name-display" hx-swap="outerHTML" class="flex items-center gap-2" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <input type="text" name="name" value="{{ user.name }}" 
            class="border rounded px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white" required>
     <button type="submit" class="text-sm text-green-500 hover:text-green-600">저장</button>

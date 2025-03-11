@@ -1,5 +1,5 @@
 <div id="phone-display">
-  <form hx-post="{% url 'edit_phone' %}" hx-target="#phone-display" hx-swap="outerHTML" class="flex items-center gap-2">
+  <form hx-post="{% url 'edit_phone' %}" hx-target="#phone-display" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-swap="outerHTML" class="flex items-center gap-2">
     <input type="tel" name="phone_number" value="{{ user.phone_number|default:'' }}" 
            class="border rounded px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white" 
            placeholder="010-0000-0000">

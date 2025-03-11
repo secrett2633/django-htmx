@@ -1,16 +1,13 @@
 import requests
 
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth import login, logout
 
 from user.models import ServiceUser as User
-from shared.views import get_navigation
 
 
-@csrf_exempt
 def google_login(request):
     """Google OAuth 로그인 URL 반환"""
     client_id = settings.GOOGLE_CLIENT_ID

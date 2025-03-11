@@ -4,6 +4,7 @@
     hx-get="{% url 'edit_name' %}"
     hx-target="#name-display"
     hx-swap="outerHTML"
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     class="text-sm text-green-500 hover:text-green-600"
   >
     변경

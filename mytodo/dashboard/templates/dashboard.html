@@ -26,6 +26,7 @@
                   hx-get="{% url 'edit_name' %}"
                   hx-target="#name-display"
                   hx-swap="outerHTML"
+                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                   class="text-sm text-green-500 hover:text-green-600"
                 >
                   변경
@@ -78,6 +79,7 @@
                   hx-get="{% url 'edit_phone' %}"
                   hx-target="#phone-display"
                   hx-swap="outerHTML"
+                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                   class="text-sm text-green-500 hover:text-green-600"
                 >
                   {% if user.phone_number %}변경{% else %}등록{% endif %}
@@ -112,6 +114,7 @@
               hx-get="{% url 'edit_bio' %}"
               hx-target="#bio-section"
               hx-swap="outerHTML"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
               class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 
                 rounded-lg transition-colors"
             >

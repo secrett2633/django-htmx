@@ -7,12 +7,14 @@
             hx-post="/toggle/{{ task.id }}/" 
             hx-target="#task-{{ task.id }}" 
             hx-swap="outerHTML"
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
             class="bg-green-500 text-white px-2 py-1 mx-1">
             ✓
         </button>
         <button 
             hx-post="/delete/{{ task.id }}/" 
             hx-target="#task-{{ task.id }}" 
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
             hx-swap="outerHTML"
             class="bg-red-500 text-white px-2 py-1">
             ✕

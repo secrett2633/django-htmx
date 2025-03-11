@@ -5,7 +5,7 @@
   <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
     최대 100자까지 입력할 수 있습니다.
   </p>
-  <form hx-post="{% url 'edit_bio' %}" hx-target="#bio-section" hx-swap="outerHTML">
+  <form hx-post="{% url 'edit_bio' %}" hx-target="#bio-section" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-swap="outerHTML">
     <textarea name="bio" rows="4" 
               class="w-full border rounded-lg p-2 mb-3 dark:bg-gray-800 dark:border-gray-700 dark:text-white">{{ user.bio|default:'' }}</textarea>
     <div class="flex justify-end gap-2">

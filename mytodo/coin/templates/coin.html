@@ -2,7 +2,7 @@
 {% load static %}
 
 <div class="space-y-2 sm:space-y-4 lg:space-y-6" 
-     hx-trigger="load"
+     hx-trigger="load, every 3s"
      hx-get="{% url 'load_market_data' %}"
      hx-target="#market-data-container"
      hx-indicator="#loading-indicator">
