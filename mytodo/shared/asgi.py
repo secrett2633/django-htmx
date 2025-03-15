@@ -13,16 +13,20 @@ from django.core.asgi import get_asgi_application
 from django.urls import re_path, path
 from channels.routing import ProtocolTypeRouter, URLRouter
 
-from tasks.consumers import ChatConsumer
+from chatbot.consumers import ChatConsumer
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shared.settings")
 
 django_asgi_app = get_asgi_application()
 
-application = ProtocolTypeRouter({
-    "http": URLRouter([
-        path("ssechat/<str:message>/<str:chat_id>/", ChatConsumer.as_asgi()),
-        re_path(r"", django_asgi_app)
-    ]),
-})
+application = ProtocolTypeRouter(
+    {
+        "http": URLRouter(
+            [
+                path("ssechat/<str:message>/<str:chat_id>/", ChatConsumer.as_asgi()),
+                re_path(r"", django_asgi_app),
+            ]
+        ),
+    }
+)

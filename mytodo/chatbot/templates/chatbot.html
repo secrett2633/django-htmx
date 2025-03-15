@@ -29,7 +29,7 @@
 
         <div id="chat-input" class="absolute bottom-0 left-0 right-0 mt-auto">
 
-            <form class="max-w-[800px] mx-auto" method="post" hx-post="/chat/send/"
+            <form class="max-w-[800px] mx-auto" method="post" hx-post="/chat/send"
                 hx-target="#new-message" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
                 <div class="shadow-lg pb-2 backdrop-blur-lg">
                     <label for="hs-trailing-button-add-on" class="sr-only">Label</label>

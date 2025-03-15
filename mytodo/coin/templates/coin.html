@@ -3,7 +3,7 @@
 
 <div class="space-y-2 sm:space-y-4 lg:space-y-6" 
      hx-trigger="load, every 3s"
-     hx-get="{% url 'load_market_data' %}"
+     hx-get="/load_market_data/"
      hx-target="#market-data-container"
      hx-indicator="#loading-indicator">
     
@@ -18,7 +18,7 @@
                         name="search-term"
                         placeholder="코인명 검색 (한글/영문)"
                         value="{{ search_term }}"
-                        hx-get="{% url 'load_market_data' %}"
+                        hx-get="/load_market_data/"
                         hx-target="#market-data-container"
                         hx-trigger="keyup changed delay:500ms"
                         hx-include="[name='from-exchange'], [name='to-exchange']"

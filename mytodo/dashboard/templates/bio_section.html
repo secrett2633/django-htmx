@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center mb-4">
     <h2 class="text-xl font-bold">자기소개</h2>
     <button
-      hx-get="{% url 'edit_bio' %}"
+      hx-get="/edit_bio/"
       hx-target="#bio-section"
       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       hx-swap="outerHTML"

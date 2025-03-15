@@ -1,10 +1,10 @@
 <div id="phone-display">
-  <form hx-post="{% url 'edit_phone' %}" hx-target="#phone-display" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-swap="outerHTML" class="flex items-center gap-2">
+  <form hx-post="/edit_phone/" hx-target="#phone-display" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-swap="outerHTML" class="flex items-center gap-2">
     <input type="tel" name="phone_number" value="{{ user.phone_number|default:'' }}" 
            class="border rounded px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white" 
            placeholder="010-0000-0000">
     <button type="submit" class="text-sm text-green-500 hover:text-green-600">저장</button>
-    <button type="button" hx-get="{% url 'phone_display' %}" hx-target="#phone-display" hx-swap="outerHTML"
+    <button type="button" hx-get="phone_display/" hx-target="#phone-display" hx-swap="outerHTML"
             class="text-sm text-red-500 hover:text-red-600">취소</button>
   </form>
 </div>

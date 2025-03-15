@@ -3,7 +3,7 @@
     {% if user.phone_number %}{{ user.phone_number }}{% else %}미등록{% endif %}
   </span>
   <button
-    hx-get="{% url 'edit_phone' %}"
+    hx-get="/edit_phone/"
     hx-target="#phone-display"
     hx-swap="outerHTML"
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'

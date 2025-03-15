@@ -1,7 +1,7 @@
 <div id="name-display" class="flex items-center gap-2">
   <span class="text-gray-900 dark:text-white">{{ user.username }}</span>
   <button
-    hx-get="{% url 'edit_name' %}"
+    hx-get="/edit_name/"
     hx-target="#name-display"
     hx-swap="outerHTML"
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'

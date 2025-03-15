@@ -16,66 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tasks.views import *
-from dashboard.views import *
-from chatbot.views import *
-from user.views import *
-from shared.views import *
-from coin.views import *
+from ninja import NinjaAPI
+
+from chatbot.urls import router as chatbot_router
+from dashboard.urls import router as dashboard_router
+from user.urls import router as user_router
+from coin.urls import router as coin_router
+from tasks.urls import router as task_router
+
+
+base_api = NinjaAPI(title="todo", version="0.0.0")
+base_api.add_router("", chatbot_router)
+base_api.add_router("", dashboard_router)
+base_api.add_router("", user_router)
+base_api.add_router("", coin_router)
+base_api.add_router("", task_router)
 
 urlpatterns = [
-    # Django 관리자 페이지
+    path("", base_api.urls),
     path("admin/", admin.site.urls),
-]
-
-urlpatterns += [
-    # Task 관련 URL
-    path('', index, name='index'),
-    path('add/', add_task, name='add_task'),
-    path('toggle/<int:task_id>/', toggle_task, name='toggle_task'),
-    path('delete/<int:task_id>/', delete_task, name='delete_task'),
-    
-    # Header 관련 URL
-    path('mobile-menu/', mobile_menu, name='mobile_menu'),
-]
-
-urlpatterns += [
-    # 인증 관련 URL
-    path('signin/', signin_page, name='signin'),
-    path('logout/', logout_user, name='logout'),
-    
-    # Google OAuth2 인증 URL
-    path('auth/google/login/', google_login, name='google_login'),
-    path('auth/google/callback/', google_callback, name='google_callback'),
-    
-    # 개인정보 처리 관련 URL
-    path('pp', pp, name='pp'),
-    path('tos', tos, name='tos')
-]
-
-urlpatterns += [
-    # 유저 대시보드 관련 URL
-    path('dashboard/', dashboard_page, name='dashboard'),
-    
-    # Edit views
-    path('edit-name/', edit_name, name='edit_name'),
-    path('edit-phone/', edit_phone, name='edit_phone'),
-    path('edit-bio/', edit_bio, name='edit_bio'),
-    
-    # Display views (for cancel actions)
-    path('name-display/', name_display, name='name_display'),
-    path('phone-display/', phone_display, name='phone_display'),
-    path('bio-section/', bio_section, name='bio_section'),
-]
-
-urlpatterns += [
-    # Chatbot 관련 URL
-    path('chatbot', chatbot, name='chatbot'),
-    path('chat/send/', chat_send, name='chat_send'),
-]
-
-urlpatterns += [
-    # Coin 관련 URL
-    path('coin/', coin_page, name='coin'),
-    path('load_market_data/', load_market_data, name='load_market_data'),
 ]

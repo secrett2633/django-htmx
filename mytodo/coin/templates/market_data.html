@@ -10,7 +10,7 @@
                     <tr class="text-gray-500 dark:text-gray-400 text-[10px] sm:text-sm xl:text-base">
                         <!-- 코인명 헤더 -->
                         <th class="w-[30%] px-3 py-1 sm:py-3 text-center">
-                            <button hx-get="{% url 'load_market_data' %}"
+                            <button hx-get="/load_market_data/"
                                     hx-target="#market-data-container"
                                     hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
                                     hx-vals='{"sort_field": "name", "current_direction": "{{ sort_state.direction|default:"" }}"}'
@@ -36,7 +36,7 @@
                         
                         <!-- 프리미엄 헤더 -->
                         <th class="w-[15%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
-                            <button hx-get="{% url 'load_market_data' %}"
+                            <button hx-get="/load_market_data/"
                                     hx-target="#market-data-container"
                                     hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
                                     hx-vals='{"sort_field": "premium", "current_direction": "{{ sort_state.direction|default:"" }}"}'
@@ -62,7 +62,7 @@
                         
                         <!-- 시작 거래소 가격 헤더 -->
                         <th class="w-[20%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
-                            <button hx-get="{% url 'load_market_data' %}"
+                            <button hx-get="/load_market_data/"
                                     hx-target="#market-data-container"
                                     hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
                                     hx-vals='{"sort_field": "fromPrice", "current_direction": "{{ sort_state.direction|default:"" }}"}'
@@ -91,7 +91,7 @@
                         
                         <!-- 비교 거래소 가격 헤더 -->
                         <th class="w-[20%] px-1 sm:px-3 py-1.5 sm:py-3 text-center">
-                            <button hx-get="{% url 'load_market_data' %}"
+                            <button hx-get="/load_market_data/"
                                     hx-target="#market-data-container"
                                     hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
                                     hx-vals='{"sort_field": "toPrice", "current_direction": "{{ sort_state.direction|default:"" }}"}'
@@ -120,7 +120,7 @@
                         
                         <!-- 거래량 헤더 -->
                         <th class="w-[15%] pr-1 py-1.5 sm:py-3 text-center">
-                            <button hx-get="{% url 'load_market_data' %}"
+                            <button hx-get="/load_market_data/"
                                     hx-target="#market-data-container"
                                     hx-include="[name='from-exchange'], [name='to-exchange'], [name='search-term']"
                                     hx-vals='{"sort_field": "volume", "current_direction": "{{ sort_state.direction|default:"" }}"}'

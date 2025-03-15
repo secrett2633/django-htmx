@@ -23,7 +23,7 @@
                   {{ user.username }}
                 </span>
                 <button
-                  hx-get="{% url 'edit_name' %}"
+                  hx-get="/edit_name/"
                   hx-target="#name-display"
                   hx-swap="outerHTML"
                   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
@@ -76,7 +76,7 @@
                   {% if user.phone_number %}{{ user.phone_number }}{% else %}미등록{% endif %}
                 </span>
                 <button
-                  hx-get="{% url 'edit_phone' %}"
+                  hx-get="/edit_phone/"
                   hx-target="#phone-display"
                   hx-swap="outerHTML"
                   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
@@ -91,7 +91,7 @@
 
         <div class="mt-8 flex justify-end">
           <button
-            hx-post="{% url 'logout' %}"
+            hx-post="/logout/"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
             hx-target="body"
             hx-swap="outerHTML"
@@ -111,7 +111,7 @@
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold">자기소개</h2>
             <button
-              hx-get="{% url 'edit_bio' %}"
+              hx-get="/edit_bio/"
               hx-target="#bio-section"
               hx-swap="outerHTML"
               hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'

@@ -14,11 +14,11 @@
         소셜 계정으로 간편하게 로그인하세요.
         <br />
         회원가입시 코코아의
-        <a href="{% url 'pp' %}" class="text-blue-500">
+        <a href="/pp/" class="text-blue-500">
           이용약관
         </a>
         및
-        <a href="{% url 'tos' %}" class="text-blue-500">
+        <a href="/tos/" class="text-blue-500">
           개인정보처리방침
         </a>
         에 동의하게 됩니다.
@@ -26,7 +26,7 @@
     </div>
     <div class="mt-8 space-y-4">
       <button
-        hx-post="{% url 'google_login' %}"
+        hx-post="/google_login/"
         hx-swap="none"
         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 

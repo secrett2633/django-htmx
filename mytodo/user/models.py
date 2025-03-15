@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class ServiceUser(AbstractUser):
     email = models.EmailField()
     username = models.CharField(max_length=255)
@@ -10,7 +11,7 @@ class ServiceUser(AbstractUser):
     last_name = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     provider = models.CharField(max_length=255, blank=True)
-    
+
     @property
     def is_authenticated(self):
         return True
@@ -21,6 +22,6 @@ class ServiceUser(AbstractUser):
         constraints = [
             models.UniqueConstraint(fields=["email"], name="unique_email"),
         ]
-    
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

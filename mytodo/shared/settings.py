@@ -144,6 +144,6 @@ CHANNEL_LAYERS = {
 API_URL = "http://localhost:8000"
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-AUTH_USER_MODEL = 'user.ServiceUser'
+AUTH_USER_MODEL = "user.ServiceUser"
 
 LOGIN_URL = "signin"
