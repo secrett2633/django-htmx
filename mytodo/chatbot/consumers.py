@@ -1,8 +1,6 @@
-import asyncio
-import ollama
-
 from channels.generic.http import AsyncHttpConsumer
 
+from chatbot.service.ollama import ollama_stream_service
 
 class ChatConsumer(AsyncHttpConsumer):
     async def handle(self, body: bytes):
@@ -17,27 +15,15 @@ class ChatConsumer(AsyncHttpConsumer):
         )
 
         user_message: str = self.scope["url_route"]["kwargs"]["message"]
+        chat_id: str = self.scope["url_route"]["kwargs"]["chat_id"]
 
-        stream: ollama.StreamResponse = ollama.chat(
+        stream = await ollama_stream_service.get_stream(
             model="deepseek-r1:32b",
-            messages=[{"role": "user", "content": user_message}],
-            stream=True,
+            messages=[{"role": "user", "content": user_message}]
         )
 
-        for chunk in stream:
-            data: str = chunk["message"]["content"]
-            data: str = data.replace(" ", "&nbsp;")
-            data: str = data.replace("\n", "<br/>")
-
-            await self.send_body(
-                f"event: message\ndata: {data}\n\n".encode("utf-8"), more_body=True
-            )
-            await asyncio.sleep(0)
-
-        chat_id: str = self.scope["url_route"]["kwargs"]["chat_id"]
-        await self.send_body(
-            f'event: message\ndata: <div id="chat-sse-listener-{chat_id}" hx-swap-oob="true"></div>\n\n'.encode(
-                "utf-8"
-            ),
-            more_body=False,
+        await ollama_stream_service.process_stream(
+            stream=stream, 
+            send_body_func=self.send_body, 
+            chat_id=chat_id
         )
