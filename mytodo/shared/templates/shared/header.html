@@ -6,8 +6,14 @@
     <script src="https://unpkg.com/htmx.org"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <link rel="manifest" href="/static/manifest.json">
-</head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/monokai-sublime.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+  </head>
 
 <nav class="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-900 relative z-30">
   <div class="mx-auto max-w-[2000px] px-4 sm:px-6 lg:px-8">
@@ -124,4 +130,9 @@
       }
     });
   });
+  htmx.logger = function(elt, event, data) {
+      if(console) {
+          console.log(event, elt, data);
+      }
+  };
 </script>

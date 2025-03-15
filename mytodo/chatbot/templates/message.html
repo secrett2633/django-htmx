@@ -1,28 +1,45 @@
-<div data-variant="{{ variant }}" class="p-4 px-16
+<div 
+  data-variant="{{ variant }}" 
+  class="p-4 px-16 
     data-[variant=ai]:bg-slate-100 
     data-[variant=ai-sse]:bg-slate-100 
-    data-[variant=human]:bg-slate-200 
-    ">
-
-    <div class="max-w-[600px] m-auto prose">
-        {% if variant == "ai-sse" %}
-        <div
-            id="chat-sse-listener-{{ chat_id }}"
-            hx-ext="sse"
-            sse-connect="ssechat/{{ human_message }}/{{ chat_id }}/"
-            >
-
-            <div
-                sse-swap="message"
-                hx-target="#sage-answer-{{ chat_id }}"
-                hx-swap="beforeend"
-            ></div>
-
-        </div>
-        <div id="sage-answer-{{ chat_id }}"></div>
+    data-[variant=human]:bg-slate-200"
+>
+  <div class="max-w-[600px] m-auto prose">
+    {% if variant == "ai-sse" %}
+      <div
+        id="chat-sse-listener-{{ chat_id }}"
+        hx-ext="sse"
+        sse-swap="message"
+        hx-swap="none"
+        sse-connect="ssechat/{{ human_message }}/{{ chat_id }}/"
+      >
+      </div>
+      <div id="sage-answer-{{ chat_id }}"></div>
+      
+      <script>
+        document.addEventListener('htmx:sseBeforeMessage', function(event) {
+          const targetId = event.detail.elt.id;
+          const chatId = targetId.replace('chat-sse-listener-', '');
         
-        {% else %}
-        {{ text|safe }}
-        {% endif %}
-    </div>
+          if (chatId !== "{{ chat_id }}") {
+            return;
+          }
+          
+          let newData = event.detail.data;
+          newData = newData.replace(/&nbsp;/g, ' ');
+          newData = newData.replace(/<br\s*\/?>/gi, '\n');
+          
+          const outputElement = document.getElementById(`sage-answer-${chatId}`);
+          outputElement.innerHTML = marked.parse(outputElement.innerText + newData);
+          hljs.highlightAll();
+          
+          console.log('SAVED DATA: ' + newData);
+
+        });
+      </script>
+    {% else %}
+      {{ text|safe }}
+    {% endif %}
+  </div>
 </div>
